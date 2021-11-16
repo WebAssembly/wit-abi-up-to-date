@@ -10,8 +10,9 @@ try {
     'wai-abi',
     '--tag',
     tag,
+    '--dev',
   ]);
-  child_process.execFileSync('wai-gen', ['--check', '.'])
+  child_process.execFileSync('wai-abi', ['--check', '.'])
 } catch (error) {
   core.setFailed(error.message);
 }
