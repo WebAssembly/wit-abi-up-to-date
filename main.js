@@ -4,18 +4,26 @@ const child_process = require('child_process');
 try {
   const tag = core.getInput('wai-abi-tag');
   const url = 'https://github.com/alexcrichton/example-wasi-tools';
-  child_process.execFileSync('cargo', [
-    'install',
-    '--git',
-    url,
-    'wai-abi',
-    '--tag',
-    tag,
-    '--debug',
-  ]);
   try {
+    core.startGroup('Install `wai-abi` executable');
+    child_process.execFileSync('cargo', [
+      'install',
+      '--git',
+      url,
+      'wai-abi',
+      '--tag',
+      tag,
+      '--debug',
+    ]);
+  } finally {
+    core.endGroup();
+  }
+  try {
+    core.startGroup('Use `wai-abi` to verify abi files are up to date');
     child_process.execFileSync('wai-abi', ['--check', '.'])
+    core.endGroup();
   } catch (error) {
+    core.endGroup();
     core.info('Failed to verify that `*.abi.md` files are up-to-date with');
     core.info('their `*.wai.md` counterparts. The `wai-abi` tool needs to be');
     core.info('rerun on this branch and the changes should be committed');
