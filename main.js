@@ -10,7 +10,7 @@ try {
     'wai-abi',
     '--tag',
     tag,
-    '--dev',
+    '--debug',
   ]);
   child_process.execFileSync('wai-abi', ['--check', '.'])
 } catch (error) {
