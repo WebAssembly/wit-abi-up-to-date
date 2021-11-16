@@ -3,7 +3,7 @@ const child_process = require('child_process');
 
 try {
   const tag = core.getInput('wai-abi-tag');
-  const url = 'https://github.com/alexcrichton/example-wasi-tools';
+  const url = 'https://github.com/WebAssembly/wasi-tools';
   try {
     core.startGroup('Install `wai-abi` executable');
     child_process.execFileSync(
