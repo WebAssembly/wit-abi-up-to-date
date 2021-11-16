@@ -6,21 +6,29 @@ try {
   const url = 'https://github.com/alexcrichton/example-wasi-tools';
   try {
     core.startGroup('Install `wai-abi` executable');
-    child_process.execFileSync('cargo', [
-      'install',
-      '--git',
-      url,
-      'wai-abi',
-      '--tag',
-      tag,
-      '--debug',
-    ]);
+    child_process.execFileSync(
+      'cargo',
+      [
+        'install',
+        '--git',
+        url,
+        'wai-abi',
+        '--tag',
+        tag,
+        '--debug',
+      ],
+      { stdio: [null, process.stdout, process.stdout] },
+    );
   } finally {
     core.endGroup();
   }
   try {
     core.startGroup('Use `wai-abi` to verify abi files are up to date');
-    child_process.execFileSync('wai-abi', ['--check', '.'])
+    child_process.execFileSync(
+      'wai-abi',
+      ['--check', '.'],
+      { stdio: [null, process.stdout, process.stdout] },
+    );
     core.endGroup();
   } catch (error) {
     core.endGroup();
