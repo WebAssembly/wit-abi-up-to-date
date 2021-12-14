@@ -1,3 +1,3 @@
-# GitHub Action for `*.wai.md` files
+# GitHub Action for `*.wit.md` files
 
 ... TODO more here ...

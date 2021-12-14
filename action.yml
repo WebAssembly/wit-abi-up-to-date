@@ -1,8 +1,8 @@
 name: 'Verify WASI ABI files are up-to-date'
 description: 'Verify WASI ABI files are up-to-date'
 inputs:
-  wai-abi-tag:
-    description: 'version of the `wai-abi` tool to use'
+  wit-abi-tag:
+    description: 'version of the `wit-abi` tool to use'
     required: true
     default: '0.1.0'
 runs:
