@@ -12,6 +12,7 @@ try {
         'install',
         '--git',
         url,
+        '--locked',
         'wit-abi',
         '--tag',
         tag,
