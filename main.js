@@ -36,7 +36,7 @@ try {
     core.info('their `*.wit.md` counterparts. The `wit-abi` tool needs to be');
     core.info('rerun on this branch and the changes should be committed');
     core.info('');
-    core.info(`  cargo install --git ${url} wit-abi --tag ${tag}`);
+    core.info(`  cargo install --git ${url} --locked wit-abi --tag ${tag}`);
     core.info(`  wit-abi .`)
     core.info('');
     core.info('That command will regenerate the `*.abi.md` files to get committed here');
