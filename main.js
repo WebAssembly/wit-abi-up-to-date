@@ -27,7 +27,7 @@ try {
     core.startGroup('Use `wit-abi` to verify abi files are up to date');
     child_process.execFileSync(
       'wit-abi',
-      ['markdown', '--check', '--world=world.world' 'wit'],
+      ['markdown', '--check', '--world=world' 'wit'],
       { stdio: [null, process.stdout, process.stdout] },
     );
     core.endGroup();
@@ -38,7 +38,7 @@ try {
     core.info('rerun on this branch and the changes should be committed');
     core.info('');
     core.info(`  cargo install --git ${url} --locked wit-abi --tag ${tag}`);
-    core.info(`  wit-abi markdown --world=world.world wit`)
+    core.info(`  wit-abi markdown --world=world wit`)
     core.info('');
     core.info('That command will regenerate the `*.md` files to get committed here');
     throw error;
