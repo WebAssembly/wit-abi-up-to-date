@@ -27,7 +27,7 @@ try {
     core.startGroup('Use `wit-abi` to verify abi files are up to date');
     child_process.execFileSync(
       'wit-abi',
-      ['markdown', '--check', '--world=world' 'wit'],
+      ['markdown', '--check', '--world=world', 'wit'],
       { stdio: [null, process.stdout, process.stdout] },
     );
     core.endGroup();
