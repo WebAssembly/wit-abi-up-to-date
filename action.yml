@@ -4,7 +4,7 @@ inputs:
   wit-abi-tag:
     description: 'version of the `wit-abi` tool to use'
     required: true
-    default: '0.7.0'
+    default: '0.9.0'
 runs:
   using: 'node16'
   main: 'main.js'
