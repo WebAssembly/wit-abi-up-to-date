@@ -40,7 +40,7 @@ try {
     core.info('rerun on this branch and the changes should be committed');
     core.info('');
     core.info(`  cargo install --git ${url} --locked wit-abi --tag ${tag}`);
-    core.info(`  wit-abi markdown --world=world wit`)
+    core.info(`  wit-abi markdown --html-in-md wit`)
     core.info('');
     core.info('That command will regenerate the `*.md` files to get committed here');
     throw error;
