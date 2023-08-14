@@ -33,4 +33,5 @@ jobs:
       with:
         wit-bindgen: '0.16.0'
         worlds: 'command reactor'
+        directory: 'wit'
 ```
