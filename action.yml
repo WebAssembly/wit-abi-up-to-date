@@ -1,10 +1,46 @@
 name: 'Verify WASI ABI files are up-to-date'
 description: 'Verify WASI ABI files are up-to-date'
+
 inputs:
-  wit-abi-tag:
-    description: 'version of the `wit-abi` tool to use'
-    required: true
+  wit-bindgen:
+    description: 'version of the `wit-bindgen` tool to use'
+    required: false
     default: '0.11.0'
+  worlds:
+    description: 'worlds to generate documentation for'
+    required: false
+    default: '*'
+
 runs:
-  using: 'node16'
-  main: 'main.js'
+  using: composite
+  steps:
+    - name: Install wit-bindgen
+      shell: bash
+      run: cargo install wit-bindgen-cli@${{ inputs.wit-bindgen }}
+
+    - name: Generate documentation for each world
+      shell: bash
+      if: ${{ inputs.worlds == '*' }}
+      run: wit-bindgen markdown wit --check --html-in-md
+
+    - name: Generate documentation for each world
+      shell: bash
+      if: ${{ inputs.worlds != '*' }}
+      run: |
+        set -ex
+        for world in ${{ inputs.worlds }}; do
+          wit-bindgen markdown wit -w $world --check --html-in-md
+        done
+
+    - name: Print generation instructions
+      if: ${{ failure() }}
+      shell: bash
+      run: |
+        echo 'Failed to verity that `*.md` files are up-to-date with'
+        echo 'their `wit/*.wit.md` counterparts. The `wit-bindgen` tool needs to'
+        echo 'be rerun on this branch and the changes should be committed'
+        echo ''
+        echo '  cargo install wit-bindgen-cli@{{ inputs.wit-bindgen }}'
+        echo '  wit-bindgen markdown wit --html-in-md'
+        echo ''
+        echo 'That command will regenerate the `*.md` files to get committed here'
