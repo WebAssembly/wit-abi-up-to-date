@@ -26,7 +26,7 @@ runs:
     - name: Generate documentation for each world
       shell: bash
       if: ${{ inputs.worlds != '*' }}
-      run:
+      run: |
         set -ex
         for world in ${{ inputs.worlds }}; do
           wit-bindgen markdown wit -w $world --check --html-in-md
@@ -35,7 +35,7 @@ runs:
     - name: Print generation instructions
       if: ${{ failure() }}
       shell: bash
-      run:
+      run: |
         echo 'Failed to verity that `*.md` files are up-to-date with'
         echo 'their `wit/*.wit.md` counterparts. The `wit-bindgen` tool needs to'
         echo 'be rerun on this branch and the changes should be committed'
