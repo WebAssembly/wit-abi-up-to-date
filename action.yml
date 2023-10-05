@@ -22,6 +22,8 @@ runs:
       shell: bash
       if: ${{ inputs.worlds == '*' }}
       run: wit-bindgen markdown wit --check --html-in-md
+      env:
+        WIT_REQUIRE_SEMICOLONS: 1
 
     - name: Generate documentation for each world
       shell: bash
