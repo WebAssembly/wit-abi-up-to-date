@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: WebAssembly/wit-abi-up-to-date@v15
+    - uses: WebAssembly/wit-abi-up-to-date@v16
 ```
 
 optionally:
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: WebAssembly/wit-abi-up-to-date@v15
+    - uses: WebAssembly/wit-abi-up-to-date@v16
       with:
         wit-bindgen: '0.12.0'
         worlds: 'command reactor'
