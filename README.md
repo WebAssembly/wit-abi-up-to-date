@@ -8,7 +8,7 @@ jobs:
     name: Check ABI files are up-to-date
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: WebAssembly/wit-abi-up-to-date@v16
 ```
 
@@ -20,9 +20,9 @@ jobs:
     name: Check ABI files are up-to-date
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: WebAssembly/wit-abi-up-to-date@v16
       with:
-        wit-bindgen: '0.12.0'
+        wit-bindgen: '0.14.0'
         worlds: 'command reactor'
 ```
