@@ -23,6 +23,6 @@ jobs:
     - uses: actions/checkout@v4
     - uses: WebAssembly/wit-abi-up-to-date@v16
       with:
-        wit-bindgen: '0.14.0'
+        wit-bindgen: '0.16.0'
         worlds: 'command reactor'
 ```
