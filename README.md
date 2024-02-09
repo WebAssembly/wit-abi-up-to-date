@@ -3,6 +3,14 @@
 Configured with:
 
 ```yml
+name: CI
+on:
+  push:
+    branches: [main]
+    tags-ignore: [dev]
+  pull_request:
+    branches: [main]
+
 jobs:
   abi-up-to-date:
     name: Check ABI files are up-to-date
