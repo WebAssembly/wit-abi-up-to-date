@@ -1,4 +1,4 @@
-# GitHub Action for `*.wit.md` files
+# GitHub Action for generating `*.md` from `*.wit`.
 
 Configured with:
 

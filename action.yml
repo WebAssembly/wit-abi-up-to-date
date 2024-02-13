@@ -39,7 +39,7 @@ runs:
       shell: bash
       run: |
         echo 'Failed to verity that `*.md` files are up-to-date with'
-        echo 'their `wit/*.wit.md` counterparts. The `wit-bindgen` tool needs to'
+        echo 'their `wit/*.wit` counterparts. The `wit-bindgen` tool needs to'
         echo 'be rerun on this branch and the changes should be committed'
         echo ''
         echo '  cargo install wit-bindgen-cli@{{ inputs.wit-bindgen }}'
