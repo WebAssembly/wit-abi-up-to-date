@@ -5,7 +5,7 @@ inputs:
   wit-bindgen:
     description: 'version of the `wit-bindgen` tool to use'
     required: false
-    default: '0.16.0'
+    default: '0.17.0'
   worlds:
     description: 'worlds to generate documentation for'
     required: false
@@ -14,9 +14,15 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install wit-bindgen
-      shell: bash
-      run: cargo install wit-bindgen-cli@${{ inputs.wit-bindgen }}
+    - name: Setup `wit-bindgen`
+      uses: bytecodealliance/actions/wit-bindgen/setup@v1.0.1
+      with:
+        version: ${{ inputs.wit-bindgen }}
+
+    - name: Setup `wasm-tools`
+      uses: bytecodealliance/actions/wasm-tools/setup@v1.0.1
+      with:
+        version: 1.0.58
 
     - name: Generate documentation for each world
       shell: bash
@@ -46,3 +52,25 @@ runs:
         echo '  wit-bindgen markdown wit --html-in-md'
         echo ''
         echo 'That command will regenerate the `*.md` files to get committed here'
+
+    - name: Determine package name
+      shell: bash
+      id: package
+      run: |
+        package=$(wasm-tools component wit ./wit| grep package | head -n 1)
+        package=$(echo $package | sed 's/package //' | sed 's/;//' | sed 's/:/-/')
+        echo "package=$package" >> "$GITHUB_OUTPUT"
+
+    - name: Generate wasm-encoded WIT package
+      shell: bash
+      run: wasm-tools component wit ./wit --wasm -o ${{ steps.package.outputs.package }}.wasm
+
+    - uses: actions/upload-artifact@v4
+      with:
+        path: ${{ steps.package.outputs.package }}.wasm
+
+    - name: Release tagged build
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags')
+      with:
+        files: ${{ steps.package.outputs.package }}.wasm
