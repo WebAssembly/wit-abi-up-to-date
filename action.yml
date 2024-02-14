@@ -10,6 +10,9 @@ inputs:
     description: 'worlds to generate documentation for'
     required: false
     default: '*'
+  directory:
+    description: 'the directory containing the WIT files'
+    default: 'wit'
 
 runs:
   using: composite
@@ -27,7 +30,7 @@ runs:
     - name: Generate documentation for each world
       shell: bash
       if: ${{ inputs.worlds == '*' }}
-      run: wit-bindgen markdown wit --check --html-in-md
+      run: wit-bindgen markdown ${{ inputs.directory }} --check --html-in-md
       env:
         WIT_REQUIRE_SEMICOLONS: 1
 
@@ -37,7 +40,7 @@ runs:
       run: |
         set -ex
         for world in ${{ inputs.worlds }}; do
-          wit-bindgen markdown wit -w $world --check --html-in-md
+          wit-bindgen markdown ${{ inputs.directory }} -w $world --check --html-in-md
         done
 
     - name: Print generation instructions
@@ -45,11 +48,11 @@ runs:
       shell: bash
       run: |
         echo 'Failed to verity that `*.md` files are up-to-date with'
-        echo 'their `wit/*.wit` counterparts. The `wit-bindgen` tool needs to'
+        echo 'their `${{ inputs.directory }}/*.wit` counterparts. The `wit-bindgen` tool needs to'
         echo 'be rerun on this branch and the changes should be committed'
         echo ''
-        echo '  cargo install wit-bindgen-cli@{{ inputs.wit-bindgen }}'
-        echo '  wit-bindgen markdown wit --html-in-md'
+        echo '  cargo install wit-bindgen-cli@${{ inputs.wit-bindgen }}'
+        echo '  wit-bindgen markdown ${{ inputs.directory }} --html-in-md'
         echo ''
         echo 'That command will regenerate the `*.md` files to get committed here'
 
@@ -57,13 +60,13 @@ runs:
       shell: bash
       id: package
       run: |
-        package=$(wasm-tools component wit ./wit| grep package | head -n 1)
+        package=$(wasm-tools component wit ${{ inputs.directory }} | grep package | head -n 1)
         package=$(echo $package | sed 's/package //' | sed 's/;//' | sed 's/:/-/')
         echo "package=$package" >> "$GITHUB_OUTPUT"
 
     - name: Generate wasm-encoded WIT package
       shell: bash
-      run: wasm-tools component wit ./wit --wasm -o ${{ steps.package.outputs.package }}.wasm
+      run: wasm-tools component wit ${{ inputs.directory }} --wasm -o ${{ steps.package.outputs.package }}.wasm
 
     - uses: actions/upload-artifact@v4
       with:
