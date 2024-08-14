@@ -9,7 +9,7 @@ inputs:
   wit-bindgen:
     description: 'version of the `wit-bindgen` tool to use'
     required: false
-    default: '0.26.0'
+    default: '0.30.0'
   worlds:
     description: 'worlds to generate documentation for'
     required: false
