@@ -2,10 +2,14 @@ name: 'Verify WASI ABI files are up-to-date'
 description: 'Verify WASI ABI files are up-to-date'
 
 inputs:
+  wasm-tools:
+    description: 'version of `wasm-tools` to use'
+    required: false
+    default: '1.215.0'
   wit-bindgen:
     description: 'version of the `wit-bindgen` tool to use'
     required: false
-    default: '0.26.0'
+    default: '0.30.0'
   worlds:
     description: 'worlds to generate documentation for'
     required: false
@@ -29,7 +33,7 @@ runs:
     - name: Setup `wasm-tools`
       uses: bytecodealliance/actions/wasm-tools/setup@v1.1.0
       with:
-        version: 1.209.1
+        version: ${{ inputs.wasm-tools }}
 
     - name: Generate documentation for each world
       shell: bash
