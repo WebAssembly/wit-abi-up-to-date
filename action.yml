@@ -21,6 +21,10 @@ inputs:
     description: 'comma-separated list of features to enable'
     required: false
     default: ''
+  all-features:
+    description: 'whether or not to activate all features when processing WIT files'
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -38,7 +42,12 @@ runs:
     - name: Generate documentation for each world
       shell: bash
       if: ${{ inputs.worlds == '*' }}
-      run: wit-bindgen markdown ${{ inputs.directory }} --features=${{inputs.features}} --check --html-in-md
+      run: |
+        all_features_flag=""
+        if [ "${{ inputs.all-features }}" == "true" ]; then
+          all_features_flag="--all-features"
+        fi
+        wit-bindgen markdown ${{ inputs.directory }} --features=${{inputs.features}} $all_features_flag --check --html-in-md
       env:
         WIT_REQUIRE_SEMICOLONS: 1
 
@@ -47,9 +56,12 @@ runs:
       if: ${{ inputs.worlds != '*' }}
       run: |
         set -ex
+        all_features_flag=""
+        if [ "${{ inputs.all-features }}" == "true" ]; then
+          all_features_flag="--all-features"
+        fi
         for world in ${{ inputs.worlds }}; do
-          ${parameter:+word}
-          wit-bindgen markdown ${{ inputs.directory }} -w $world --features=${{ inputs.features }} --check --html-in-md
+          wit-bindgen markdown ${{ inputs.directory }} -w $world --features=${{ inputs.features }} $all_features_flag --check --html-in-md
         done
 
     - name: Print generation instructions
