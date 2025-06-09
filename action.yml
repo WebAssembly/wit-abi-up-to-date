@@ -5,11 +5,11 @@ inputs:
   wasm-tools:
     description: 'version of `wasm-tools` to use'
     required: false
-    default: '1.215.0'
+    default: 'v1.233.0'
   wit-bindgen:
     description: 'version of the `wit-bindgen` tool to use'
     required: false
-    default: '0.30.0'
+    default: '0.42.1'
   worlds:
     description: 'worlds to generate documentation for'
     required: false
