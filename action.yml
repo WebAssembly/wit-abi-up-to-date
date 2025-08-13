@@ -5,11 +5,11 @@ inputs:
   wasm-tools:
     description: 'version of `wasm-tools` to use'
     required: false
-    default: 'v1.233.0'
+    default: '1.236.0'
   wit-bindgen:
     description: 'version of the `wit-bindgen` tool to use'
     required: false
-    default: '0.42.1'
+    default: '0.43.0'
   worlds:
     description: 'worlds to generate documentation for'
     required: false
@@ -30,14 +30,14 @@ runs:
   using: composite
   steps:
     - name: Setup `wit-bindgen`
-      uses: bytecodealliance/actions/wit-bindgen/setup@v1.1.0
+      uses: taiki-e/cache-cargo-install-action@b33c63d3b3c85540f4eba8a4f71a5cc0ce030855 # 2.3.0
       with:
-        version: ${{ inputs.wit-bindgen }}
+        tool: wit-bindgen-cli@${{ inputs.wit-bindgen }}
 
     - name: Setup `wasm-tools`
-      uses: bytecodealliance/actions/wasm-tools/setup@v1.1.0
+      uses: taiki-e/cache-cargo-install-action@b33c63d3b3c85540f4eba8a4f71a5cc0ce030855 # 2.3.0
       with:
-        version: ${{ inputs.wasm-tools }}
+        tool: wasm-tools@${{ inputs.wasm-tools }}
 
     - name: Generate documentation for each world
       shell: bash
